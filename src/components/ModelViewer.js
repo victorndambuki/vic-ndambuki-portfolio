@@ -38,7 +38,7 @@ function Loader() {
 
 export default function ModelViewer({ modelPath }) {
   return (
-    <div className="w-full h-full relative bg-gradient-to-b from-ink-800 to-ink">
+    <div className="w-full h-full relative" style={{ background: 'linear-gradient(160deg, #2a2420 0%, #1e1a16 50%, #1a1714 100%)' }}>
 
       {/* Hint */}
       <div className="absolute bottom-3 left-0 right-0 flex justify-center z-10 pointer-events-none">
@@ -54,12 +54,12 @@ export default function ModelViewer({ modelPath }) {
         onContextMenu={e => e.preventDefault()}
       >
         {/* Cinematic lighting */}
-        <ambientLight intensity={0.3} />
-        <directionalLight position={[4, 8, 4]}   intensity={1.5} color="#fff8f0" castShadow />
-        <directionalLight position={[-4, 2, -4]}  intensity={0.4} color="#c4703f" />
-        <pointLight       position={[0, -2, 3]}   intensity={0.3} color="#8ab0d0" />
-        <spotLight        position={[0, 10, 0]}    intensity={0.8} angle={0.4} penumbra={1} color="#ffffff" />
-
+        <ambientLight intensity={0.8} />
+          <directionalLight position={[4, 8, 4]}   intensity={2.0} color="#fff8f0" castShadow />
+          <directionalLight position={[-4, 2, -4]}  intensity={0.8} color="#c4703f" />
+          <pointLight       position={[0, -2, 3]}   intensity={0.6} color="#8ab0d0" />
+          <spotLight        position={[0, 10, 0]}    intensity={1.2} angle={0.4} penumbra={1} color="#ffffff" />
+          <pointLight       position={[3, 0, 2]}    intensity={0.5} color="#fff0e0" />
         <Suspense fallback={<Loader />}>
           {modelPath
             ? <GLBModel path={modelPath} />
