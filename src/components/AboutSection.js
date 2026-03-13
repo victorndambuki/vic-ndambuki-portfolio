@@ -44,12 +44,7 @@ export default function AboutSection() {
                           className="w-full h-full object-cover" />
                   ──────────────────────────────────────────────────
                 */}
-                <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-                  <span className="text-5xl opacity-20">👤</span>
-                  <span className="font-mono text-xs text-ash/20 tracking-widest text-center px-4">
-                    ADD vic-profile.jpg<br />TO public/images/
-                  </span>
-                </div>
+                <img src="/images/vic-profile.jpg" alt="Vic Ndambuki" className="w-full h-full object-cover" />
               </div>
 
               {/* Copper corner accent */}
