@@ -38,11 +38,11 @@ function Loader() {
 
 export default function ModelViewer({ modelPath }) {
   return (
-    <div className="w-full h-full relative" style={{ background: 'linear-gradient(160deg, #4a4540 0%, #3a3530 50%, #2e2a26 100%)' }}>
+    <div className="w-full h-full relative" style={{ background: 'linear-gradient(160deg, #f5f0eb 0%, #ede8e0 50%, #e8e2d8 100%)' }}>
 
       {/* Hint */}
       <div className="absolute bottom-3 left-0 right-0 flex justify-center z-10 pointer-events-none">
-        <span className="font-mono text-xs text-ash-400/50 tracking-widest">
+        <span className="font-mono text-xs text-ink/30 tracking-widest">
           DRAG · ROTATE · SCROLL TO ZOOM
         </span>
       </div>
