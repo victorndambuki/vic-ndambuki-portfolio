@@ -32,6 +32,18 @@ export const projects = [
   },
 
   // ── Add new projects below ───────────────────────────────────
+  {
+    title: 'Vintage Model Car',
+    tags: ['laser'],
+    description:
+      'This project explores vintage vehicle body design through a small-scale model constructed from thin sheet materials. The panels were designed and assembled to replicate classic early-automobile proportions while demonstrating how simple folded surfaces can create a structured vehicle body.',
+    details: [
+      'Material: 1.0 mm mild steel sheet',
+      'Panels assembly required',
+    ],
+    model: 'vintage_car.glb',
+    image: 'vintage_car.jpg',
+  },
 ]
 
 // ═══════════════════════════════════════════════════════════════
