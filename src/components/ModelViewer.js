@@ -43,7 +43,7 @@ export default function ModelViewer({ modelPath }) {
       {/* Hint */}
       <div className="absolute bottom-3 left-0 right-0 flex justify-center z-10 pointer-events-none">
         <span className="font-mono text-xs text-ink/30 tracking-widest">
-          DRAG · ROTATE · SCROLL TO ZOOM
+          DRAG · ROTATE · PINCH/SCROLL TO ZOOM
         </span>
       </div>
 
