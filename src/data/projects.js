@@ -55,6 +55,18 @@ export const projects = [
           ],
     model: 'ceiling_light_lampshade.glb',
   },
+
+  {
+    title: 'Piezo-electric Gas Lighter',
+    tags: ['Design'],
+    description:
+      'Design of a piezo-electric gas lighter from scratch.',
+    details: [
+      'Material: stainless steel, plastic',
+          ],
+    model: 'gas_lighter.glb',
+    image: 'gas_lighter1.jpg',
+  },
   
 ]
 
