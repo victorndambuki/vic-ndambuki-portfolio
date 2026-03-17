@@ -62,7 +62,7 @@ export const projects = [
     description:
       'Design of a piezo-electric gas lighter from scratch.',
     details: [
-      'Material: stainless steel, plastic',
+      'Material: stainless steel, plastic, rubber',
           ],
     model: 'gas_lighter.glb',
     image: 'gas_lighter1.jpg',
