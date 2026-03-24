@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import CountUp from './CountUp'
 
 export default function AboutSection() {
   const [visible, setVisible] = useState(false)
@@ -18,6 +19,13 @@ export default function AboutSection() {
     transition: `all 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
   })
 
+  const stats = [
+    { num: '100+', label: 'Laser Projects' },
+    { num: '30+',  label: '3D Print Projects' },
+    { num: '3+',   label: 'Years Experience' },
+    { num: '100%', label: 'Quality Focus' },
+  ]
+
   return (
     <section id="about" ref={ref} className="py-28 sm:py-36 px-6 sm:px-12 bg-surface">
       <div className="max-w-7xl mx-auto">
@@ -32,22 +40,10 @@ export default function AboutSection() {
 
           {/* ── Photo column ── */}
           <div className="lg:col-span-2" style={anim(100)}>
-            {/* Photo frame */}
             <div className="relative mb-6">
               <div className="aspect-[3/4] bg-ink-800 border border-ash/5 overflow-hidden rounded-sm">
-                {/*
-                  ── TO ADD YOUR PHOTO ──────────────────────────────
-                  1. Upload vic-profile.jpg to public/images/ on GitHub
-                  2. Delete the placeholder <div> below (the one with 👤)
-                  3. Replace with:
-                     <img src="/images/vic-profile.jpg" alt="Vic Ndambuki"
-                          className="w-full h-full object-cover" />
-                  ──────────────────────────────────────────────────
-                */}
                 <img src="/images/vic-profile.jpg" alt="Vic Ndambuki" className="w-full h-full object-cover" />
               </div>
-
-              {/* Copper corner accent */}
               <div className="absolute -bottom-3 -right-3 w-12 h-12 border-b border-r border-copper/40" />
               <div className="absolute -top-3 -left-3 w-12 h-12 border-t border-l border-copper/20" />
             </div>
@@ -88,16 +84,13 @@ export default function AboutSection() {
               </p>
             </div>
 
-            {/* Stats row */}
+            {/* ── Animated stats row ── */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-ash/5 border border-ash/5" style={anim(350)}>
-              {[
-                { num: '100+', label: 'Laser Projects' },
-                { num: '30+',  label: '3D Print Projects' },
-                { num: '3+',   label: 'Years Experience' },
-                { num: '100%', label: 'Quality Focus' },
-              ].map(item => (
+              {stats.map(item => (
                 <div key={item.label} className="bg-ink-800 p-6 text-center">
-                  <div className="font-display text-3xl font-light text-copper mb-1">{item.num}</div>
+                  <div className="font-display text-3xl font-light text-copper mb-1">
+                    <CountUp value={item.num} />
+                  </div>
                   <div className="font-mono text-xs text-ash/30 tracking-wide">{item.label}</div>
                 </div>
               ))}
