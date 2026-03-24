@@ -13,9 +13,12 @@ export default function SkillsSection() {
     return () => obs.disconnect()
   }, [])
 
+  // Duplicate list so the infinite loop seams invisibly
+  const marqueeItems = [...softwareList, ...softwareList, ...softwareList]
+
   return (
-    <section id="skills" ref={ref} className="py-28 sm:py-36 px-6 sm:px-12 bg-ink">
-      <div className="max-w-7xl mx-auto">
+    <section id="skills" ref={ref} className="py-28 sm:py-36 bg-ink overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-12">
 
         {/* Label */}
         <div
@@ -26,7 +29,7 @@ export default function SkillsSection() {
           <div className="rule flex-1" />
         </div>
 
-        {/* Skill cards — full width grid */}
+        {/* Skill cards */}
         <div className="grid md:grid-cols-3 gap-px bg-ash/5 border border-ash/5 mb-px">
           {skills.map((skill, i) => (
             <div
@@ -52,23 +55,39 @@ export default function SkillsSection() {
           ))}
         </div>
 
-        {/* Software strip */}
-        <div
-          className="bg-ink-800 border border-ash/5 p-6 flex flex-wrap items-center justify-between gap-y-4"
-          style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.8s ease 0.4s' }}
-        >
-          <span className="font-mono text-xs text-ash/20 tracking-widest uppercase w-full sm:w-auto mb-2 sm:mb-0">
+      </div>
+
+      {/* ── Infinite marquee strip ── */}
+      <div
+        className="mt-px bg-ink-800 border-y border-ash/5 py-5 overflow-hidden"
+        style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.8s ease 0.4s' }}
+      >
+        {/* Label pinned left — sits above the scroll track on small screens */}
+        <div className="px-6 sm:px-12 mb-3">
+          <span className="font-mono text-xs text-ash/20 tracking-widest uppercase">
             Software & Tools
           </span>
-          <div className="flex flex-wrap gap-x-8 gap-y-2">
-            {softwareList.map(s => (
-              <span key={s} className="font-mono text-xs text-ash/35 tracking-wide hover:text-copper transition-colors duration-300 cursor-default">
-                {s}
+        </div>
+
+        {/* Scrolling track */}
+        <div className="relative">
+          {/* Fade edges */}
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 z-10"
+            style={{ background: 'linear-gradient(to right, #1a1a1a, transparent)' }} />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 z-10"
+            style={{ background: 'linear-gradient(to left, #1a1a1a, transparent)' }} />
+
+          <div className="marquee-track">
+            {marqueeItems.map((s, i) => (
+              <span key={i} className="marquee-item">
+                <span className="text-copper/30 mx-3">◈</span>
+                <span className="font-mono text-xs text-ash/35 tracking-wide whitespace-nowrap">
+                  {s}
+                </span>
               </span>
             ))}
           </div>
         </div>
-
       </div>
     </section>
   )
