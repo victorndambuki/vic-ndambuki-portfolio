@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import CountUp from './CountUp'
 
 export default function Hero() {
   const [phase, setPhase] = useState(0)
@@ -57,6 +58,12 @@ export default function Hero() {
 
   const show = (n) => phase >= n
 
+  const stats = [
+    { num: '100+', label: 'Projects Completed' },
+    { num: '3+',   label: 'Years Experience' },
+    { num: '3',    label: 'Core Disciplines' },
+  ]
+
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-ink noise">
       {/* Ambient mesh */}
@@ -84,9 +91,9 @@ export default function Hero() {
           Mechanical Engineer · Nairobi, Kenya
         </div>
 
-        {/* Main headline — word by word reveal */}
+        {/* Main headline */}
         <h1 className="font-display font-light leading-[0.92] mb-8">
-          <WordReveal text="Vic" size="text-[13vw] sm:text-[11vw] md:text-[10vw]" delay={0} show={show(2)} />
+          <WordReveal text="Vic"      size="text-[13vw] sm:text-[11vw] md:text-[10vw]" delay={0}   show={show(2)} />
           <br />
           <WordReveal text="Ndambuki" size="text-[13vw] sm:text-[11vw] md:text-[10vw]" delay={120} show={show(2)} italic />
         </h1>
@@ -96,8 +103,8 @@ export default function Hero() {
           className="flex flex-wrap items-center gap-3 mb-10"
           style={{ opacity: show(3) ? 1 : 0, transform: show(3) ? 'none' : 'translateY(20px)', transition: 'all 1s cubic-bezier(0.16,1,0.3,1)' }}
         >
-          {['Laser Cutting', 'CAD Design', '3D Printing'].map((s, i) => (
-            <span key={s} className="tag tag-laser" style={{ animationDelay: `${i * 80}ms` }}>{s}</span>
+          {['Laser Cutting', 'CAD Design', '3D Printing'].map((s) => (
+            <span key={s} className="tag tag-laser">{s}</span>
           ))}
         </div>
 
@@ -130,18 +137,16 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* Stats */}
+        {/* ── Animated stats ── */}
         <div
           className="flex gap-12 sm:gap-20 mt-20 pt-8 border-t border-ash/5"
           style={{ opacity: show(6) ? 1 : 0, transition: 'opacity 1.2s ease 0.2s' }}
         >
-          {[
-            { num: '100+', label: 'Projects Completed' },
-            { num: '3+',   label: 'Years Experience' },
-            { num: '3',    label: 'Core Disciplines' },
-          ].map(s => (
+          {stats.map(s => (
             <div key={s.label}>
-              <div className="font-display text-3xl sm:text-4xl font-light text-copper">{s.num}</div>
+              <div className="font-display text-3xl sm:text-4xl font-light text-copper">
+                <CountUp value={s.num} />
+              </div>
               <div className="font-mono text-xs text-ash-400 mt-1 tracking-wider">{s.label}</div>
             </div>
           ))}
