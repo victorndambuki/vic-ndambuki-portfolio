@@ -64,7 +64,7 @@ export default function ProjectsSection() {
         <div className="space-y-px">
           {filtered.length > 0
             ? filtered.map((project, i) => (
-              <ProjectCard key={`${project.title}-${active}`} project={project} index={i} />
+                <ProjectCard key={project.title} project={project} index={i} />
               ))
             : (
               <div className="py-24 text-center border border-ash/5 rounded-sm">
