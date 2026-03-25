@@ -26,8 +26,8 @@ export default function ProjectCard({ project, index }) {
   const imagePath = project.image ? `/images/${project.image}` : null
   const isEven    = index % 2 === 0
 
-  // On mobile, default to photo tab if an image exists (big perf win)
-  // On desktop, default to 3D model tab
+  // On mobile default to the photo tab (if available) to avoid booting a
+  // Three.js canvas immediately — big performance win on low-end devices.
   const [activeTab, setActiveTab] = useState(() =>
     imagePath && isMobile() ? 'image' : 'model'
   )
@@ -80,26 +80,30 @@ export default function ProjectCard({ project, index }) {
             ))}
           </div>
 
-          {/* Project index */}
+          {/* Project index badge */}
           <div className="absolute top-4 right-4 z-20">
             <span className="font-mono text-xs text-ash/20 tracking-widest">
               {String(index + 1).padStart(2, '0')}
             </span>
           </div>
 
-          {/* 3D viewer — only mount the Canvas when the tab is active */}
+          {/* ── 3D viewer ──────────────────────────────────────────────────────
+              Only mount the Canvas AFTER the card has entered the viewport
+              (visible === true). This prevents off-screen cards from booting
+              WebGL contexts and burning GPU while the user hasn't seen them yet.
+              The tab check is kept so we don't mount a hidden canvas when the
+              user has switched to the Photo tab.
+          ─────────────────────────────────────────────────────────────────── */}
           <div
             className={`absolute inset-0 transition-opacity duration-300 ${
               activeTab === 'model' ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
             }`}
           >
-            {/* Only render Three.js when the model tab is actually selected.
-                This prevents invisible canvases from consuming GPU on mobile. */}
-            {activeTab === 'model' && modelPath && (
+            {activeTab === 'model' && modelPath && visible && (
               <ModelViewer modelPath={modelPath} />
             )}
 
-            {/* Placeholder when no model file is available */}
+            {/* Placeholder when no model file exists yet */}
             {!modelPath && activeTab === 'model' && (
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-ink-800">
                 <span className="font-display text-5xl text-ash/10">
@@ -110,7 +114,7 @@ export default function ProjectCard({ project, index }) {
             )}
           </div>
 
-          {/* Photo */}
+          {/* ── Photo tab ── */}
           {imagePath && (
             <div
               className={`absolute inset-0 transition-opacity duration-300 ${
@@ -123,10 +127,9 @@ export default function ProjectCard({ project, index }) {
           )}
         </div>
 
-        {/* ── Content ── */}
-        <div
-          className="w-full lg:w-1/2 p-8 sm:p-10 lg:p-14 flex flex-col justify-center border-t lg:border-t-0 border-ash/5"
-        >
+        {/* ── Content panel ── */}
+        <div className="w-full lg:w-1/2 p-8 sm:p-10 lg:p-14 flex flex-col justify-center border-t lg:border-t-0 border-ash/5">
+
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-6">
             {project.tags.map(t => (
@@ -144,7 +147,7 @@ export default function ProjectCard({ project, index }) {
             {project.description}
           </p>
 
-          {/* Details */}
+          {/* Detail bullets */}
           {project.details?.length > 0 && (
             <ul className="space-y-2.5 mb-10">
               {project.details.map((d, i) => (
