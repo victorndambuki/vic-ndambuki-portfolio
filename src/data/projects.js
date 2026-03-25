@@ -60,12 +60,23 @@ export const projects = [
     title: 'Piezo-electric Gas Lighter',
     tags: ['Design'],
     description:
-      'Design of a piezo-electric gas lighter from scratch.',
+      'Reverse engineering design of a piezo-electric gas lighter.',
     details: [
       'Material: stainless steel, plastic, rubber',
           ],
     model: 'gas_lighter.glb',
     image: 'gas_lighter1.jpg',
+  },
+
+  {
+    title: 'Pipe Vice Assembly',
+    tags: ['Design'],
+    description:
+      'Design of a pipe vice for cutting and notching pipes.',
+    details: [
+      'Material: cast iron, mild steel',
+          ],
+    model: 'Pipe_Vice_Assembly.glb',
   },
   
 ]
