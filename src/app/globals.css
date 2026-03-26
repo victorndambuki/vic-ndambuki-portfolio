@@ -1,0 +1,233 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap');
+
+/* ── Theme CSS Variables ──────────────────────────────────── */
+/* Default = dark mode */
+:root {
+  --ink:     #0d0d0d;
+  --ink-800: #1a1a1a;
+  --ink-700: #242424;
+  --ink-600: #2e2e2e;
+  --ink-500: #3d3d3d;
+  --ash:     #f0ebe3;
+  --ash-200: #e8e2d9;
+  --ash-300: #d4cdc3;
+  --ash-400: #b0a89e;
+  --ash-500: #7a746c;
+
+  /* Viewer area dark background */
+  --viewer-bg-start: #1e1a16;
+  --viewer-bg-mid:   #181310;
+  --viewer-bg-end:   #141210;
+
+  /* Marquee edge fade colour */
+  --marquee-fade: #1a1a1a;
+}
+
+/* Light mode overrides */
+html.light {
+  --ink:     #f7f3ee;
+  --ink-800: #ede8e1;
+  --ink-700: #e4dfd7;
+  --ink-600: #dad5cc;
+  --ink-500: #cac5bc;
+  --ash:     #1a1512;
+  --ash-200: #2e2926;
+  --ash-300: #44403c;
+  --ash-400: #6b6560;
+  --ash-500: #8a8480;
+
+  /* Viewer area – lighter warm tone in light mode */
+  --viewer-bg-start: #ddd8d0;
+  --viewer-bg-mid:   #d5d0c8;
+  --viewer-bg-end:   #ccc7bf;
+
+  --marquee-fade: #ede8e1;
+}
+
+/* ── Reset & base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--ink);
+  color: var(--ash);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* ── Custom cursor — desktop / fine-pointer ONLY ──────────── */
+@media (pointer: fine) {
+  body, a, button { cursor: none; }
+  canvas          { cursor: grab; }
+  canvas:active   { cursor: grabbing; }
+  #c-dot, #c-ring { display: block !important; }
+}
+
+#c-ring.c-ring-grow {
+  width:        56px !important;
+  height:       56px !important;
+  margin-left: -28px !important;
+  margin-top:  -28px !important;
+  border-color: rgba(196, 112, 63, 0.35) !important;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 3px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: #c4703f; border-radius: 2px; }
+
+/* ── Tag pills ────────────────────────────────────────────── */
+.tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+.tag-laser  { background: rgba(196,112,63,0.12); color: #c4703f; border: 1px solid rgba(196,112,63,0.28); }
+.tag-3d     { background: rgba(100,140,180,0.10); color: #8ab0d0; border: 1px solid rgba(100,140,180,0.22); }
+.tag-design { background: rgba(160,180,120,0.10); color: #a8c080; border: 1px solid rgba(160,180,120,0.22); }
+
+/* ── Blueprint grid utility ───────────────────────────────── */
+.blueprint-grid {
+  background-image:
+    linear-gradient(rgba(196,112,63,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196,112,63,0.04) 1px, transparent 1px),
+    linear-gradient(rgba(196,112,63,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196,112,63,0.015) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+}
+
+/* ── Noise texture overlay ────────────────────────────────── */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+/* ── Horizontal rule accent ───────────────────────────────── */
+.rule {
+  height: 1px;
+  background: linear-gradient(to right, rgba(196,112,63,0.45), transparent);
+}
+
+/* ── Section label ────────────────────────────────────────── */
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #c4703f;
+  white-space: nowrap;
+}
+
+/* ── Infinite marquee ─────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+.marquee-item {
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+}
+
+/* ── Marquee edge fade — uses CSS variable so it adapts to theme ── */
+.marquee-fade-left {
+  background: linear-gradient(to right, var(--ink-800), transparent);
+}
+.marquee-fade-right {
+  background: linear-gradient(to left, var(--ink-800), transparent);
+}
+
+/* ── Project viewer background — theme-aware ──────────────── */
+.viewer-bg {
+  background: linear-gradient(160deg,
+    var(--viewer-bg-start) 0%,
+    var(--viewer-bg-mid)   50%,
+    var(--viewer-bg-end)   100%);
+}
+
+/* ── Animated word reveal ─────────────────────────────────── */
+.word-wrap { overflow: hidden; display: inline-block; }
+.word-wrap span { display: inline-block; opacity: 0; }
+.word-wrap.animate span { animation: wordIn 0.9s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+/* ── Skill / experience bar ───────────────────────────────── */
+.bar-track {
+  height: 1px;
+  background: rgba(240,235,227,0.06);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, #a05530, #c4703f);
+  border-radius: 1px;
+  width: 0;
+  transition: width 1.4s cubic-bezier(0.16,1,0.3,1);
+}
+.bar-fill.animate { width: var(--bar-pct, 80%); }
+
+/* ── Keyframes ────────────────────────────────────────────── */
+@keyframes wordIn {
+  from { opacity: 0; transform: translateY(120%) rotate(3deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(0deg); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes lineGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes lineGrowY {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}
+
+/* ── Border-l utility for ink-800 viewer viewer ───────────── */
+.border-l-ash\/5  { border-left-color:  rgba(240,235,227,0.05); }
+.border-r-ash\/5  { border-right-color: rgba(240,235,227,0.05); }
+.border-ash\/4    { border-color: rgba(240,235,227,0.04); }
+
+/* ── Theme transition for all elements ───────────────────── */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+/* Don't slow down animations on the cursor or canvas */
+#c-dot, #c-ring, canvas { transition: none !important; }
