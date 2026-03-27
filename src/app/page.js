@@ -1,9 +1,10 @@
-import Navigation     from '../components/Navigation'
-import Hero           from '../components/Hero'
+import Navigation      from '../components/Navigation'
+import Hero            from '../components/Hero'
 import ProjectsSection from '../components/ProjectsSection'
-import AboutSection   from '../components/AboutSection'
-import SkillsSection  from '../components/SkillsSection'
-import ContactSection from '../components/ContactSection'
+import AboutSection    from '../components/AboutSection'
+import GallerySection  from '../components/GallerySection'
+import SkillsSection   from '../components/SkillsSection'
+import ContactSection  from '../components/ContactSection'
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Hero />
       <ProjectsSection />
       <AboutSection />
+      <GallerySection />
       <SkillsSection />
       <ContactSection />
 
