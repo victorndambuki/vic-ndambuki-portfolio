@@ -92,36 +92,111 @@ function Loader() {
   )
 }
 
-// ─── Fullscreen icons ─────────────────────────────────────────────────────────
-function ExpandIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="15 3 21 3 21 9" />
-      <polyline points="9 21 3 21 3 15" />
-      <line x1="21" y1="3" x2="14" y2="10" />
-      <line x1="3"  y1="21" x2="10" y2="14" />
-    </svg>
-  )
-}
+// ─── Fullscreen Button ────────────────────────────────────────────────────────
+function FullscreenButton({ containerRef }) {
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
-function CollapseIcon() {
+  useEffect(() => {
+    const onChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+    document.addEventListener('fullscreenchange', onChange)
+    return () => document.removeEventListener('fullscreenchange', onChange)
+  }, [])
+
+  const toggle = useCallback(async () => {
+    if (!isFullscreen) {
+      try {
+        await containerRef.current?.requestFullscreen()
+      } catch (err) {
+        console.warn('Fullscreen request failed:', err)
+      }
+    } else {
+      try {
+        await document.exitFullscreen()
+      } catch (err) {
+        console.warn('Exit fullscreen failed:', err)
+      }
+    }
+  }, [isFullscreen, containerRef])
+
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="4 14 10 14 10 20" />
-      <polyline points="20 10 14 10 14 4" />
-      <line x1="10" y1="14" x2="3"  y2="21" />
-      <line x1="21" y1="3"  x2="14" y2="10" />
-    </svg>
+    <button
+      onClick={toggle}
+      title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+      style={{
+        position:       'absolute',
+        bottom:         '12px',
+        right:          '12px',
+        zIndex:         30,
+        display:        'flex',
+        alignItems:     'center',
+        gap:            '6px',
+        padding:        '6px 10px 6px 8px',
+        background:     'rgba(13,13,13,0.75)',
+        backdropFilter: 'blur(6px)',
+        border:         '1px solid rgba(196,112,63,0.35)',
+        borderRadius:   '2px',
+        color:          '#f0ebe3',
+        cursor:         'pointer',
+        fontFamily:     '"DM Mono", monospace',
+        fontSize:       '0.6rem',
+        letterSpacing:  '0.12em',
+        textTransform:  'uppercase',
+        whiteSpace:     'nowrap',
+        transition:     'border-color 0.2s, background 0.2s',
+        userSelect:     'none',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.borderColor = 'rgba(196,112,63,0.7)'
+        e.currentTarget.style.background  = 'rgba(13,13,13,0.92)'
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.borderColor = 'rgba(196,112,63,0.35)'
+        e.currentTarget.style.background  = 'rgba(13,13,13,0.75)'
+      }}
+    >
+      {/* Icon */}
+      <svg
+        width="13"
+        height="13"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ flexShrink: 0, opacity: 0.85 }}
+      >
+        {isFullscreen ? (
+          /* Exit fullscreen — arrows pointing inward */
+          <>
+            <path d="M6 2v4H2"    stroke="#c4703f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M10 2v4h4"   stroke="#c4703f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M6 14v-4H2"  stroke="#c4703f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M10 14v-4h4" stroke="#c4703f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </>
+        ) : (
+          /* Enter fullscreen — arrows pointing outward */
+          <>
+            <path d="M2 6V2h4"    stroke="#c4703f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M14 6V2h-4"  stroke="#c4703f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M2 10v4h4"   stroke="#c4703f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M14 10v4h-4" stroke="#c4703f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </>
+        )}
+      </svg>
+
+      {/* Label */}
+      <span style={{ color: '#c4703f' }}>
+        {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+      </span>
+    </button>
   )
 }
 
 // ─── ModelViewer ──────────────────────────────────────────────────────────────
 export default function ModelViewer({ modelPath }) {
-  const containerRef  = useRef(null)
-  const [inView, setInView]           = useState(false)
-  const [isFullscreen, setIsFullscreen] = useState(false)
+  const containerRef = useRef(null)
+  const [inView, setInView] = useState(false)
 
-  // Pause auto-rotation when scrolled out of view
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
@@ -133,86 +208,23 @@ export default function ModelViewer({ modelPath }) {
     return () => obs.disconnect()
   }, [])
 
-  // Track fullscreen state changes (including Esc key exit)
-  useEffect(() => {
-    const onFsChange = () => {
-      setIsFullscreen(
-        !!(document.fullscreenElement ||
-           document.webkitFullscreenElement ||
-           document.mozFullScreenElement)
-      )
-    }
-    document.addEventListener('fullscreenchange',       onFsChange)
-    document.addEventListener('webkitfullscreenchange', onFsChange)
-    document.addEventListener('mozfullscreenchange',    onFsChange)
-    return () => {
-      document.removeEventListener('fullscreenchange',       onFsChange)
-      document.removeEventListener('webkitfullscreenchange', onFsChange)
-      document.removeEventListener('mozfullscreenchange',    onFsChange)
-    }
-  }, [])
-
-  const toggleFullscreen = useCallback(() => {
-    const el = containerRef.current
-    if (!el) return
-
-    if (!isFullscreen) {
-      // Enter fullscreen
-      if (el.requestFullscreen)             el.requestFullscreen()
-      else if (el.webkitRequestFullscreen)  el.webkitRequestFullscreen()
-      else if (el.mozRequestFullScreen)     el.mozRequestFullScreen()
-    } else {
-      // Exit fullscreen
-      if (document.exitFullscreen)            document.exitFullscreen()
-      else if (document.webkitExitFullscreen) document.webkitExitFullscreen()
-      else if (document.mozCancelFullScreen)  document.mozCancelFullScreen()
-    }
-  }, [isFullscreen])
-
   return (
     <div
       ref={containerRef}
       className="w-full h-full relative"
       style={{ background: 'linear-gradient(160deg, #f5f0eb 0%, #ede8e0 50%, #e8e2d8 100%)' }}
     >
-      {/* Interaction hint */}
-      <div className="absolute bottom-3 left-0 right-0 flex justify-center z-10 pointer-events-none">
+      {/* Drag/zoom hint — top centre so it doesn't clash with fullscreen btn */}
+      <div className="absolute top-3 left-0 right-0 flex justify-center z-10 pointer-events-none">
         <span className="font-mono text-xs text-ink/30 tracking-widest">
           DRAG · ROTATE · PINCH/SCROLL TO ZOOM
         </span>
       </div>
 
       {/* Fullscreen toggle button */}
-      <button
-        onClick={toggleFullscreen}
-        aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-        title={isFullscreen ? 'Exit fullscreen (Esc)' : 'View fullscreen'}
-        className="
-          absolute top-4 right-4 z-20
-          w-8 h-8 flex items-center justify-center
-          bg-ink/60 backdrop-blur-sm
-          border border-ash/15
-          text-ash/60 hover:text-copper hover:border-copper/40
-          transition-all duration-200
-          rounded-sm
-        "
-        style={{ pointerEvents: 'auto' }}
-      >
-        {isFullscreen ? <CollapseIcon /> : <ExpandIcon />}
-      </button>
-
-      {/* Fullscreen: make canvas fill the entire screen */}
-      <style>{`
-        :fullscreen #model-canvas-container,
-        :-webkit-full-screen #model-canvas-container,
-        :-moz-full-screen #model-canvas-container {
-          width: 100vw !important;
-          height: 100vh !important;
-        }
-      `}</style>
+      <FullscreenButton containerRef={containerRef} />
 
       <Canvas
-        id="model-canvas-container"
         camera={{ position: [0, 0.5, 4.5], fov: 50 }}
         style={{ background: 'transparent', width: '100%', height: '100%' }}
         gl={{ antialias: true, preserveDrawingBuffer: false }}
