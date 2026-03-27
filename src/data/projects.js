@@ -1,21 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// PROJECTS
-// ───────────────────────────────────────────────────────────────
-// To add a project, paste this template and fill it in:
-//
-// {
-//   title: 'Your Project Name',
-//   tags: ['laser'],           ← 'laser', '3d', or 'design'
-//   description: 'Write 2-3 sentences.',
-//   details: [
-//     'Material: write here',
-//     'Key feature: write here',
-//   ],
-//   model: 'filename.glb',     ← file in public/models/ (or null)
-//   image: 'filename.jpg',     ← file in public/images/ (or null)
-// },
-// ═══════════════════════════════════════════════════════════════
-
 export const projects = [
   {
     title: 'Metallic Phone Stand',
@@ -31,7 +13,6 @@ export const projects = [
     image: null,
   },
 
-  // ── Add new projects below ───────────────────────────────────
   {
     title: 'Vintage Model Car',
     tags: ['Laser Cutting'],
@@ -45,14 +26,14 @@ export const projects = [
     image: 'vintage_car.jpg',
   },
 
-{
+  {
     title: 'Ceiling Light Lampshade',
     tags: ['3D Printing'],
     description:
       'Custom lampshade design for a ceiling light 3D printed from PETG or ASA.',
     details: [
       'Material: PETG / ASA',
-          ],
+    ],
     model: 'ceiling_light_lampshade.glb',
   },
 
@@ -63,7 +44,7 @@ export const projects = [
       'Reverse engineering design of a piezo-electric gas lighter.',
     details: [
       'Material: stainless steel, plastic, rubber',
-          ],
+    ],
     model: 'gas_lighter.glb',
     image: 'gas_lighter1.jpg',
   },
@@ -75,15 +56,10 @@ export const projects = [
       'Design of a pipe vice for cutting and notching pipes.',
     details: [
       'Material: cast iron, mild steel',
-          ],
+    ],
     model: 'Pipe_Vice_Assembly.glb',
   },
-  
 ]
-
-// ═══════════════════════════════════════════════════════════════
-// SKILLS
-// ═══════════════════════════════════════════════════════════════
 
 export const skills = [
   {
@@ -105,10 +81,6 @@ export const skills = [
     tools: ['FDM Printing', 'PLA / PETG / ABS', 'OrcaSlicer', 'Creality Print'],
   },
 ]
-
-// ═══════════════════════════════════════════════════════════════
-// SOFTWARE STRIP
-// ═══════════════════════════════════════════════════════════════
 
 export const softwareList = [
   'SolidWorks', 'AutoCAD', 'ZWCAD', 'Cypcut', 'LightBurn', 'OrcaSlicer', 'Creality Print',
