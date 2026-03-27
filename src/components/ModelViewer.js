@@ -216,7 +216,20 @@ export default function ModelViewer({ modelPath }) {
     >
       {/* Drag/zoom hint — top centre so it doesn't clash with fullscreen btn */}
       <div className="absolute top-3 left-0 right-0 flex justify-center z-10 pointer-events-none">
-        <span className="font-mono text-xs text-ink/30 tracking-widest">
+        <span
+          style={{
+            fontFamily:     '"DM Mono", monospace',
+            fontSize:       '0.6rem',
+            letterSpacing:  '0.12em',
+            textTransform:  'uppercase',
+            color:          'rgba(240,235,227,0.7)',
+            background:     'rgba(13,13,13,0.55)',
+            backdropFilter: 'blur(6px)',
+            border:         '1px solid rgba(240,235,227,0.08)',
+            borderRadius:   '2px',
+            padding:        '4px 10px',
+          }}
+        >
           DRAG · ROTATE · PINCH/SCROLL TO ZOOM
         </span>
       </div>
