@@ -4,16 +4,72 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap');
 
+/* ══════════════════════════════════════════════════════════════
+   THEME TOKENS  (space-separated RGB for Tailwind opacity support)
+   bg-ink/90 → rgb(var(--ink) / 0.9) — works with any opacity modifier
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Dark mode (default) ──────────────────────────────────── */
+:root {
+  --ink:          13  13  13;    /* #0d0d0d */
+  --ink-800:      26  26  26;    /* #1a1a1a */
+  --ink-700:      36  36  36;    /* #242424 */
+  --ink-600:      46  46  46;    /* #2e2e2e */
+  --ink-500:      61  61  61;    /* #3d3d3d */
+
+  --ash:         240 235 227;    /* #f0ebe3 */
+  --ash-200:     232 226 217;    /* #e8e2d9 */
+  --ash-300:     212 205 195;    /* #d4cdc3 */
+  --ash-400:     176 168 158;    /* #b0a89e */
+  --ash-500:     122 116 108;    /* #7a746c */
+
+  --copper:      196 112  63;    /* #c4703f */
+  --copper-light:217 138  88;    /* #d98a58 */
+  --copper-dark: 160  85  48;    /* #a05530 */
+
+  --surface:      20  20  20;    /* #141414 */
+  --card:         28  28  28;    /* #1c1c1c */
+
+  /* Scrollbar track */
+  --scrollbar-track: #0d0d0d;
+}
+
+/* ── Light mode ───────────────────────────────────────────── */
+html.light {
+  --ink:         245 240 235;    /* #f5f0eb  warm white  */
+  --ink-800:     237 232 224;    /* #ede8e0               */
+  --ink-700:     228 221 212;    /* #e4ddd4               */
+  --ink-600:     218 210 200;    /* #dad2c8               */
+  --ink-500:     200 192 182;    /* #c8c0b6               */
+
+  --ash:          26  24  22;    /* #1a1816  near-black   */
+  --ash-200:      46  42  38;    /* #2e2a26               */
+  --ash-300:      74  68  60;    /* #4a443c               */
+  --ash-400:     100  92  82;    /* #645c52               */
+  --ash-500:     140 132 120;    /* #8c8478               */
+
+  /* copper stays the same — it's the brand accent */
+  --copper:      196 112  63;
+  --copper-light:217 138  88;
+  --copper-dark: 160  85  48;
+
+  --surface:     237 232 224;    /* #ede8e0               */
+  --card:        230 224 215;    /* #e6e0d7               */
+
+  --scrollbar-track: #ede8e0;
+}
+
 /* ── Reset & base ─────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 body {
-  background-color: #0d0d0d;
-  color: #f0ebe3;
+  background-color: rgb(var(--ink));
+  color:            rgb(var(--ash));
   font-family: 'DM Sans', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* ── Custom cursor — desktop / fine-pointer ONLY ──────────── */
@@ -21,12 +77,9 @@ body {
   body, a, button { cursor: none; }
   canvas          { cursor: grab; }
   canvas:active   { cursor: grabbing; }
-
-  /* Make the cursor elements visible */
   #c-dot, #c-ring { display: block !important; }
 }
 
-/* Ring grows when hovering interactive elements */
 #c-ring.c-ring-grow {
   width:        56px !important;
   height:       56px !important;
@@ -37,8 +90,8 @@ body {
 
 /* ── Scrollbar ────────────────────────────────────────────── */
 ::-webkit-scrollbar       { width: 4px; }
-::-webkit-scrollbar-track { background: #0d0d0d; }
-::-webkit-scrollbar-thumb { background: #c4703f; border-radius: 4px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb { background: rgb(var(--copper)); border-radius: 4px; }
 
 /* ── Tag pills ────────────────────────────────────────────── */
 .tag {
@@ -49,11 +102,24 @@ body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 3px 10px;
-  border-radius: 8px;   /* matches tailwind rounded-sm */
+  border-radius: 8px;
 }
-.tag-laser  { background: rgba(196,112,63,0.15); color: #c4703f; border: 1px solid rgba(196,112,63,0.3); }
-.tag-3d     { background: rgba(100,140,180,0.12); color: #8ab0d0; border: 1px solid rgba(100,140,180,0.25); }
-.tag-design { background: rgba(160,180,120,0.12); color: #a8c080; border: 1px solid rgba(160,180,120,0.25); }
+.tag-laser  { background: rgba(196,112,63,0.15); color: rgb(var(--copper)); border: 1px solid rgba(196,112,63,0.3); }
+.tag-3d     { background: rgba(100,140,180,0.12); color: #8ab0d0;           border: 1px solid rgba(100,140,180,0.25); }
+.tag-design { background: rgba(160,180,120,0.12); color: #a8c080;           border: 1px solid rgba(160,180,120,0.25); }
+
+/* ── Light mode tag adjustments ───────────────────────────── */
+html.light .tag-laser  { background: rgba(196,112,63,0.12); }
+html.light .tag-3d     { background: rgba(100,140,180,0.10); color: #5a8ab0; border-color: rgba(100,140,180,0.3); }
+html.light .tag-design { background: rgba(100,140,80,0.10);  color: #6a9050; border-color: rgba(100,140,80,0.3);  }
+
+/* ── Marquee fade edges (theme-aware) ─────────────────────── */
+.marquee-fade-left {
+  background: linear-gradient(to right, rgb(var(--ink-800)), transparent);
+}
+.marquee-fade-right {
+  background: linear-gradient(to left, rgb(var(--ink-800)), transparent);
+}
 
 /* ── Animated word reveal ─────────────────────────────────── */
 .word-wrap { overflow: hidden; display: inline-block; }
@@ -82,7 +148,7 @@ body {
   font-size: 0.65rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #c4703f;
+  color: rgb(var(--copper));
 }
 
 /* ── Infinite marquee ─────────────────────────────────────── */
