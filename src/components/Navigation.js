@@ -48,7 +48,7 @@ export default function Navigation() {
 
         {/* Logo */}
         <a href="#" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 border border-copper/50 flex items-center justify-center group-hover:border-copper transition-colors duration-300">
+          <div className="w-8 h-8 border border-copper/50 rounded-sm flex items-center justify-center group-hover:border-copper transition-colors duration-300">
             <span className="font-mono text-xs text-copper">VN</span>
           </div>
           <span className="font-display text-ash text-base hidden sm:block tracking-wide">Vic Ndambuki</span>
@@ -71,7 +71,7 @@ export default function Navigation() {
             <button
               onClick={toggleTheme}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="w-8 h-8 flex items-center justify-center border border-ash/15 text-ash-400 hover:text-copper hover:border-copper/40 transition-all duration-300"
+              className="w-8 h-8 flex items-center justify-center border border-ash/15 rounded-sm text-ash-400 hover:text-copper hover:border-copper/40 transition-all duration-300"
               title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
             >
               {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
@@ -80,7 +80,7 @@ export default function Navigation() {
 
           <a
             href="#contact"
-            className="px-5 py-2 border border-copper/50 text-copper font-mono text-xs tracking-widest uppercase hover:bg-copper hover:text-ink transition-all duration-300"
+            className="px-5 py-2 border border-copper/50 rounded-sm text-copper font-mono text-xs tracking-widest uppercase hover:bg-copper hover:text-ink transition-all duration-300"
           >
             Hire Me
           </a>
@@ -93,7 +93,7 @@ export default function Navigation() {
             <button
               onClick={toggleTheme}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="w-8 h-8 flex items-center justify-center border border-ash/15 text-ash-400 hover:text-copper transition-all duration-300"
+              className="w-8 h-8 flex items-center justify-center border border-ash/15 rounded-sm text-ash-400 hover:text-copper transition-all duration-300"
             >
               {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
             </button>
@@ -121,7 +121,7 @@ export default function Navigation() {
               {l}
             </a>
           ))}
-          <a href="#contact" onClick={() => setMenuOpen(false)} className="block w-full text-center py-3 mt-3 border border-copper/50 text-copper font-mono text-xs tracking-widest uppercase">
+          <a href="#contact" onClick={() => setMenuOpen(false)} className="block w-full text-center py-3 mt-3 border border-copper/50 rounded-sm text-copper font-mono text-xs tracking-widest uppercase">
             Hire Me
           </a>
         </div>
