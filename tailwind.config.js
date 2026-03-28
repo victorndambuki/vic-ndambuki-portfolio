@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,jsx}',
     './src/components/**/*.{js,jsx}',
@@ -8,26 +7,27 @@ module.exports = {
   ],
   theme: {
     extend: {
+      // ── Border radius ──────────────────────────────────────────
+      // Redefine the scale so every rounded-* class across the site
+      // gets softer values without touching individual components.
+      borderRadius: {
+        none: '0',
+        sm:   '8px',    // was 2px — used on cards, buttons, tabs, inputs
+        DEFAULT: '12px',
+        md:   '14px',
+        lg:   '18px',
+        xl:   '22px',
+        '2xl': '28px',
+        full: '9999px',
+      },
       colors: {
-        // ── Core palette (driven by CSS variables in globals.css) ──
-        ink: {
-          DEFAULT: 'var(--ink)',
-          800: 'var(--ink-800)',
-          700: 'var(--ink-700)',
-          600: 'var(--ink-600)',
-          500: 'var(--ink-500)',
-        },
-        ash: {
-          DEFAULT: 'var(--ash)',
-          200: 'var(--ash-200)',
-          300: 'var(--ash-300)',
-          400: 'var(--ash-400)',
-          500: 'var(--ash-500)',
-        },
+        // ── Core palette ──────────────────────────────────────────
+        ink:    { DEFAULT: '#0d0d0d', 800: '#1a1a1a', 700: '#242424', 600: '#2e2e2e', 500: '#3d3d3d' },
+        ash:    { DEFAULT: '#f0ebe3', 200: '#e8e2d9', 300: '#d4cdc3', 400: '#b0a89e', 500: '#7a746c' },
         copper: { DEFAULT: '#c4703f', light: '#d98a58', dark: '#a05530' },
         // ── Utility ───────────────────────────────────────────────
-        surface: 'var(--ink-800)',
-        card:    'var(--ink-700)',
+        surface: '#141414',
+        card:    '#1c1c1c',
       },
       fontFamily: {
         display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
