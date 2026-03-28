@@ -12,6 +12,8 @@ import Image from 'next/image'
 const GALLERY_IMAGES = [
   { src: '/images/vintage_car.jpg',   alt: 'Vintage Model Car',          label: 'Laser Cutting' },
   { src: '/images/gas_lighter1.jpg',  alt: 'Piezo-electric Gas Lighter',  label: 'Design'        },
+  { src: '/images/gas_lighter2.jpg',  alt: 'Piezo-electric Gas Lighter',  label: 'Design'        },
+  { src: '/images/gas_lighter3.jpg',  alt: 'Piezo-electric Gas Lighter',  label: 'Design'        },
   // ── Add more images below ─────────────────────────────────────
   // { src: '/images/your-render.jpg', alt: 'Project name', label: 'Category' },
 ]
