@@ -7,27 +7,38 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // ── Border radius ──────────────────────────────────────────
-      // Redefine the scale so every rounded-* class across the site
-      // gets softer values without touching individual components.
       borderRadius: {
-        none: '0',
-        sm:   '8px',    // was 2px — used on cards, buttons, tabs, inputs
+        none:    '0',
+        sm:      '8px',
         DEFAULT: '12px',
-        md:   '14px',
-        lg:   '18px',
-        xl:   '22px',
-        '2xl': '28px',
-        full: '9999px',
+        md:      '14px',
+        lg:      '18px',
+        xl:      '22px',
+        '2xl':   '28px',
+        full:    '9999px',
       },
       colors: {
-        // ── Core palette ──────────────────────────────────────────
-        ink:    { DEFAULT: '#0d0d0d', 800: '#1a1a1a', 700: '#242424', 600: '#2e2e2e', 500: '#3d3d3d' },
-        ash:    { DEFAULT: '#f0ebe3', 200: '#e8e2d9', 300: '#d4cdc3', 400: '#b0a89e', 500: '#7a746c' },
-        copper: { DEFAULT: '#c4703f', light: '#d98a58', dark: '#a05530' },
-        // ── Utility ───────────────────────────────────────────────
-        surface: '#141414',
-        card:    '#1c1c1c',
+        ink: {
+          DEFAULT: 'rgb(var(--ink)     / <alpha-value>)',
+          800:     'rgb(var(--ink-800) / <alpha-value>)',
+          700:     'rgb(var(--ink-700) / <alpha-value>)',
+          600:     'rgb(var(--ink-600) / <alpha-value>)',
+          500:     'rgb(var(--ink-500) / <alpha-value>)',
+        },
+        ash: {
+          DEFAULT: 'rgb(var(--ash)     / <alpha-value>)',
+          200:     'rgb(var(--ash-200) / <alpha-value>)',
+          300:     'rgb(var(--ash-300) / <alpha-value>)',
+          400:     'rgb(var(--ash-400) / <alpha-value>)',
+          500:     'rgb(var(--ash-500) / <alpha-value>)',
+        },
+        copper: {
+          DEFAULT: 'rgb(var(--copper)       / <alpha-value>)',
+          light:   'rgb(var(--copper-light) / <alpha-value>)',
+          dark:    'rgb(var(--copper-dark)  / <alpha-value>)',
+        },
+        surface: 'rgb(var(--surface) / <alpha-value>)',
+        card:    'rgb(var(--card)    / <alpha-value>)',
       },
       fontFamily: {
         display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
